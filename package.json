@@ -1,0 +1,25 @@
+{
+  "name": "promise",
+  "version": "1.0.0",
+  "description": "study promise",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dyio/promise.git"
+  },
+  "author": "dinglei",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dyio/promise/issues"
+  },
+  "homepage": "https://github.com/dyio/promise#readme",
+  "devDependencies": {
+    "rollup-plugin-typescript2": "^0.17.2",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "typescript": "^3.1.6"
+  }
+}
