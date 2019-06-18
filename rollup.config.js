@@ -9,11 +9,11 @@ const pkg = require("./package.json");
 export default {
   input:"src/index.ts",
   output:{
-    file:pkg.main,
+    file: `dist/${pkg.main}`,
     format:"umd",
-    name:"Dye",
+    name:"Promise2",
   },
-  sourcemap:true,
+  sourceMap: true,
   watch: {
     include: 'src/**',
     exclude: 'node_modules/**'
