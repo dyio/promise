@@ -14,6 +14,8 @@
 </body>
 
 <script>
+
+    /** then **/
     //  var p1 = new Promise2(function(resolve,reject){
     //      console.log(1)
     //      setTimeout(()=>{
@@ -28,13 +30,65 @@
     //         })
     //     },200)
     //  });      
-     
+ 
+    /** catch **/
 var promise = new Promise2(function(resolve, reject) {
   throw new Error('test');
 });
 promise.catch(function(error) {
-  console.log(error);
+    console.log(error);
 })
+/** resolve **/
+
+// var p1 = new Promise2(function(resolve,reject){
+//          console.log(1)
+//          setTimeout(()=>{
+//              console.log(2)
+//              resolve('lala')
+//         },200)
+//      }); 
+// Promise2.resolve(p1).then(function(value){
+//     console.log(value)
+// })
+
+
+// Promise2.resolve({then:function(resolve,reject){resolve('555')}}).then(function(value){
+//     console.log(value);
+// })
+
+//  var p = Promise.resolve();
+//  p.then(function(value){
+//     console.log(value)
+// })
+// Promise.resolve(p1).then(function(value){
+//     console.log(p1)
+// })
+
+
+
+/** finally **/
+
+//  var p1 = new Promise2(function(resolve,reject){
+//          console.log(1)
+//          setTimeout(()=>{
+//              console.log(2)
+//              resolve('lala')
+//         },200)
+//      });   
+
+//      p1.finally(function(value){
+//             console.log(value)
+//             return value
+//         }).then(function(value){
+//         console.log(`${value}2`)
+//      })
+
+/** **/
+ //Promise.reject('nofail')
+//  .catch(err=>{
+//      console.log(err);
+//  });
+ //console.log(Promise);
      
 </script>
 </html>
