@@ -83,12 +83,39 @@
 //         console.log(`${value}2`)
 //      })
 
+// let p = new Promise2(function(resolve){
+//             resolve()
+//         });
+
+//         p.then().catch().finally(()=>{
+// 			    console.log(5)
+//         })
+
+// let p = new Promise2(function(resolve,reject){
+//       reject('dd')
+// });
+
+//   p
+//   // .then()
+//   // .catch()
+//   .finally(()=>{
+//       console.log('finally');
+//   })
+
+let p = new Promise2(function(resolve){
+            resolve()
+        });
+
+        p.then().catch().finally(()=>{
+            console.log('finally')
+        })
+
 /** **/
- //Promise.reject('nofail')
+//  Promise.reject('nofail')
 //  .catch(err=>{
 //      console.log(err);
 //  });
- //console.log(Promise);
+//  console.log(Promise);
 
  /** all **/
  // 生成一个Promise对象的数组
@@ -116,19 +143,19 @@
 
 /** race **/
 
-const promises = [2, 3, 5, 7, 11, 13].map(function (id) {
-  return new Promise2(function(resolve,reject){
-    setTimeout(()=>{
-        resolve(id);
-    },id);
-  })
-});
+// const promises = [2, 3, 5, 7, 11, 13].map(function (id) {
+//   return new Promise2(function(resolve,reject){
+//     setTimeout(()=>{
+//         resolve(id);
+//     },id);
+//   })
+// });
 
-promises.unshift('ddd');
+// promises.unshift('ddd');
 
-Promise2.race(promises).then(res=>{
-  console.log(res)
-})
+// Promise2.race(promises).then(res=>{
+//   console.log(res)
+// })
      
 </script>
 </html>
