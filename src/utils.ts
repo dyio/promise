@@ -13,4 +13,11 @@ export function isObject(val) {
 }
 export function isFunc(val) {
     return  Object.prototype.toString.call(val) === "[object Function]";
-  }
+}
+export function isArray(val) {
+    return  Object.prototype.toString.call(val) === "[object Array]";
+}
+
+export function isType(type,val) {
+    return Object.prototype.toString.call(val) === `[object ${type}]`;
+}

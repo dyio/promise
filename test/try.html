@@ -32,12 +32,12 @@
     //  });      
  
     /** catch **/
-var promise = new Promise2(function(resolve, reject) {
-  throw new Error('test');
-});
-promise.catch(function(error) {
-    console.log(error);
-})
+// var promise = new Promise2(function(resolve, reject) {
+//   throw new Error('test');
+// });
+// promise.catch(function(error) {
+//     console.log(error);
+// })
 /** resolve **/
 
 // var p1 = new Promise2(function(resolve,reject){
@@ -89,6 +89,46 @@ promise.catch(function(error) {
 //      console.log(err);
 //  });
  //console.log(Promise);
+
+ /** all **/
+ // 生成一个Promise对象的数组
+// const promises = [2, 3, 5, 7, 11, 13].map(function (id) {
+//   return new Promise2(function(resolve,reject){
+//     setTimeout(()=>{
+//         resolve(id);
+//     },id);
+//   })
+// });
+
+// promises.push('ddd');
+
+// // promises.push(new Promise(function(resolve,reject){
+// //   setTimeout(()=>{
+// //     throw 'dd'
+// //   },20)
+// // }))
+
+// Promise2.all(promises).then(function (posts) {
+//   console.log(posts);
+// }).catch(function(reason){
+//   // ...
+// });
+
+/** race **/
+
+const promises = [2, 3, 5, 7, 11, 13].map(function (id) {
+  return new Promise2(function(resolve,reject){
+    setTimeout(()=>{
+        resolve(id);
+    },id);
+  })
+});
+
+promises.unshift('ddd');
+
+Promise2.race(promises).then(res=>{
+  console.log(res)
+})
      
 </script>
 </html>
