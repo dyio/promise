@@ -129,11 +129,11 @@
 
 // promises.push('ddd');
 
-// // promises.push(new Promise(function(resolve,reject){
-// //   setTimeout(()=>{
-// //     throw 'dd'
-// //   },20)
-// // }))
+// promises.push(new Promise(function(resolve,reject){
+//   setTimeout(()=>{
+//     throw 'dd'
+//   },20)
+// }))
 
 // Promise2.all(promises).then(function (posts) {
 //   console.log(posts);
@@ -157,5 +157,39 @@
 //   console.log(res)
 // })
      
+
+// var p1 = new Promise2(function(resolve,reject){
+//     resolve('p1')
+// });
+
+// var p2 = new Promise2(function(resolve,reject){
+//     resolve('p2')
+// });
+
+// p1.then(()=>{
+//     console.log('p11')
+// }).then(()=>{
+//     console.log('p12')
+// })
+
+// p2.then(()=>{
+//     console.log('p21')
+// }).then(()=>{
+//     console.log('p22')
+// })
+
+// 多个resolve测试
+
+var p1 = new Promise2(function(resolve){
+    resolve('ddd')
+    resolve('ttt')
+})
+
+p1.then(function(value){
+    console.log(value)
+})
+ 
+
+
 </script>
 </html>

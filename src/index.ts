@@ -7,9 +7,9 @@ enum pStatus  {
     rejected = 'rejected'
 }
 
-export default function Promise2(cb:any) {
+export default function Promise2(executor:any) {
 
-    if( !isFunc(cb) ){
+    if( !isFunc(executor) ){
         throw 'Promise2 传递的参数不为functon！！！';
     }
 
@@ -21,33 +21,39 @@ export default function Promise2(cb:any) {
     this.error;
 
     const resolve = (value:object)=>{
-        this.value = value;
+        
         setTimeout(()=>{
-            this.resovlecbs.forEach((item:Function)=>{
-                item(value);
-            })
-            this.status = pStatus.fulled;
+            if(this.status===pStatus.pending){
+                this.value = value;
+                this.resovlecbs.forEach((item:Function)=>{
+                    item(value);
+                })
+                this.status = pStatus.fulled;
+            }
         },0)
     }
 
     const reject = (error:Error)=>{
-        this.error = error;
+        
 
         setTimeout(()=>{ // why
-            this.status = pStatus.rejected;
-            if(this.rejectcbs.length ===0){
-                throw this.error;
-            }  else {
-                this.rejectcbs.forEach((item:Function)=>{
-                    item(error);
-                })
+            if(this.status===pStatus.pending){
+                this.error = error;
+                this.status = pStatus.rejected;
+                if(this.rejectcbs.length ===0){
+                    throw this.error;
+                }  else {
+                    this.rejectcbs.forEach((item:Function)=>{
+                        item(error);
+                    })
+                }
             }
         },0)
        // if(this.rejectcbs.length === 0 ) throw error;
     } 
 
     try {
-        cb(resolve,reject);
+        executor(resolve,reject);
     } catch (error) {
         reject(error);
     }
@@ -55,29 +61,29 @@ export default function Promise2(cb:any) {
 
 
 
-Promise2.prototype.then = function (resolvecb:Function=noop,rejectcb:Function=noop) {
+Promise2.prototype.then = function (onResolved:Function=noop,onRejected:Function=noop) {
     // this.resovlecb.push(resolve);
-    // this.rejectcb.push(reject);
+    // this.onRejected.push(reject);
 
     let scope = this;
     return new Promise2(function(resolve = noop,reject = noop){
         if(scope.status === pStatus.pending) {
             scope.resovlecbs.push((value)=>{
-                handlerRes(resolvecb,value,resolve);
+                handlerRes(onResolved,value,resolve);
             })
             scope.rejectcbs.push((error)=>{
-                handlerRes(rejectcb,error,reject);
+                handlerRes(onRejected,error,reject);
             })
         } else if(scope.status===pStatus.fulled) {
-            handlerRes(resolvecb,scope.value,resolve);
+            handlerRes(onResolved,scope.value,resolve);
         } else { // rejectd
-            handlerRes(rejectcb,scope.error,reject);
+            handlerRes(onRejected,scope.error,reject);
         }
     });
 }
 
 Promise2.prototype.catch = function(catchcb:Function) {
-    return this.then(null, catchcb);
+    return this.then(undefined, catchcb);
 }
 
 // hack  但是不对
@@ -110,7 +116,7 @@ Promise2.reject = function() {
  */
 Promise2.race = function(arr) {
     if( !isArray(arr) ){
-        throw 'all函数 传递的参数不为Array！！！';
+        throw 'race函数 传递的参数不为Array！！！';
     }
 
     let args = Array.prototype.slice.call(arr);
@@ -127,7 +133,7 @@ Promise2.race = function(arr) {
                 });
             } else {
                 hasResolve = true;
-                resolve(ifunc)
+                !hasResolve && resolve(ifunc)
             }
         }
     })
@@ -160,6 +166,9 @@ Promise2.all = function(arr) {
             } else {
                 resArr[i] = ifunc;
                 handlerNum ++;
+                if(handlerNum>=arr.length){ // 彻底完成
+                    resolve(resArr)
+                }
             }
         }
     });
