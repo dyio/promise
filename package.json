@@ -4,7 +4,7 @@
   "description": "study promise",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --compilers js:babel-core/register test/**/*.js",
+    "test": "mocha --compilers js:babel-core/register test/all/*.js",
     "start": "rollup -c -w",
     "prebuild": "rimraf dist",
     "build": "rollup -c"
