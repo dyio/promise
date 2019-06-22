@@ -180,14 +180,29 @@
 
 // 多个resolve测试
 
-var p1 = new Promise2(function(resolve){
+// var p1 = new Promise2(function(resolve){
+//     resolve('ddd')
+//     resolve('ttt')
+// })
+
+// p1.then(function(value){
+//     console.log(value)
+// })
+
+// 多个then 测试
+
+var p1 = new Promise(function(resolve){
     resolve('ddd')
-    resolve('ttt')
 })
 
 p1.then(function(value){
     console.log(value)
 })
+
+p1.then(function(value){
+    console.log(value)
+})
+ 
  
 
 

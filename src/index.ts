@@ -61,7 +61,7 @@ export default function Promise2(executor:any) {
 
 
 
-Promise2.prototype.then = function (onResolved:Function=noop,onRejected:Function=noop) {
+Promise2.prototype.then = function (onFullfilled:Function=noop,onRejected:Function=noop) {
     // this.resovlecb.push(resolve);
     // this.onRejected.push(reject);
 
@@ -69,13 +69,13 @@ Promise2.prototype.then = function (onResolved:Function=noop,onRejected:Function
     return new Promise2(function(resolve = noop,reject = noop){
         if(scope.status === pStatus.pending) {
             scope.resovlecbs.push((value)=>{
-                handlerRes(onResolved,value,resolve);
+                handlerRes(onFullfilled,value,resolve);
             })
             scope.rejectcbs.push((error)=>{
                 handlerRes(onRejected,error,reject);
             })
         } else if(scope.status===pStatus.fulled) {
-            handlerRes(onResolved,scope.value,resolve);
+            handlerRes(onFullfilled,scope.value,resolve);
         } else { // rejectd
             handlerRes(onRejected,scope.error,reject);
         }
