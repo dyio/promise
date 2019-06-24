@@ -1,11 +1,7 @@
 import {noop ,isObject ,isDef , isFunc ,isArray} from './utils';
-import {handlerRes} from './promise-utils';
+import {handlerRes,pStatus} from './promise-utils';
 
-enum pStatus  {
-    pending = 'pending',
-    fulled = 'fullfilled',
-    rejected = 'rejected'
-}
+
 
 export default function Promise2(executor:any) {
 
@@ -59,25 +55,44 @@ export default function Promise2(executor:any) {
     }
 }
 
+function handlerPromise(){}
 
 
-Promise2.prototype.then = function (onFullfilled:Function=noop,onRejected:Function=noop) {
-    // this.resovlecb.push(resolve);
-    // this.onRejected.push(reject);
+Promise2.prototype.then = function (onFullfilled:Function,onRejected:Function) {
 
     let scope = this;
     return new Promise2(function(resolve = noop,reject = noop){
-        if(scope.status === pStatus.pending) {
-            scope.resovlecbs.push((value)=>{
-                handlerRes(onFullfilled,value,resolve);
-            })
-            scope.rejectcbs.push((error)=>{
-                handlerRes(onRejected,error,reject);
-            })
-        } else if(scope.status===pStatus.fulled) {
-            handlerRes(onFullfilled,scope.value,resolve);
-        } else { // rejectd
-            handlerRes(onRejected,scope.error,reject);
+
+        const resolveHandler = function(value){
+            if(isDef(onFullfilled)) {
+                handlerRes(onFullfilled,value,resolve,reject,scope.constructor);
+            } else {
+                resolve(value)
+            }
+        }
+        const rejectHanlder = function(error) {
+            if(isDef(onRejected)){
+                handlerRes(onRejected,error,resolve,reject,scope.constructor);
+            } else {
+                reject(error);
+            }
+        }
+
+        try {
+            if(scope.status === pStatus.pending) {
+                scope.resovlecbs.push((value)=>{
+                    resolveHandler(value)
+                })
+                scope.rejectcbs.push((error)=>{
+                    rejectHanlder(error);
+                })
+            } else if(scope.status===pStatus.fulled) {
+                resolveHandler(scope.value);
+            } else { // rejectd
+                rejectHanlder(scope.error);
+            }
+        } catch (error) {
+            reject(error);
         }
     });
 }
@@ -89,9 +104,12 @@ Promise2.prototype.catch = function(catchcb:Function) {
 // hack  但是不对
 Promise2.prototype.finally = function (callback) {
    return this.then((value)=>{
-        callback();
+        callback(value);
         return value;
-   },callback);
+   },(value)=>{
+        callback(value);
+        return value;
+   });
 }
 
 Promise2.resolve = function(handler){

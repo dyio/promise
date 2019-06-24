@@ -19,25 +19,71 @@
     //  var p1 = new Promise2(function(resolve,reject){
     //      console.log(1)
     //      setTimeout(()=>{
-    //          console.log(2)
-    //          reject()
-
-    //          p1.then(function(value){
-    //             console.log(value)
-    //             return value
-    //          }).then(function(value){
-    //             console.log(`${value}2`)
-    //         })
+    //         resolve(5)
     //     },200)
-    //  });      
+    //  });  
+
+    //  p1.then(value=>{
+    //      console.log(value)
+    //  })
+
+
+    //  var p1 = new Promise(function(resolve,reject){
+    //      console.log(1)
+    //      setTimeout(()=>{
+    //          console.log(2)
+    //          resolve()
+    //          p1.then(function(value){
+    //     console.log(value)
+    //     return value
+    // }).then(function(value){
+    //     console.log(`${value}2`)
+    // })
+
+    //     },200)
+    //  });  
+     
+    
+
+    //  var p1 = new Promise(function(resolve,reject){
+    //      console.log(1)
+    //      setTimeout(()=>{
+    //          console.log(2)
+    //          reject(3)
+    //     },200)
+    //  })
+
+    // p1.then(function(value){
+    //     console.log(value)
+    //     return value
+    // }).finally(function(value){
+    //     console.log(`${value}2`)
+    // })
+
  
     /** catch **/
+
+
 // var promise = new Promise2(function(resolve, reject) {
 //   throw new Error('test');
 // });
 // promise.catch(function(error) {
 //     console.log(error);
 // })
+
+// var promise = new Promise2(function(resolve, reject) {
+//   resolve(33)
+// });
+// promise.catch(function(error) {
+//     return error;
+// }).then(value=>{
+//     console.log(value)
+// })
+
+
+
+
+
 /** resolve **/
 
 // var p1 = new Promise2(function(resolve,reject){
@@ -191,19 +237,44 @@
 
 // 多个then 测试
 
-var p1 = new Promise(function(resolve){
-    resolve('ddd')
-})
+// var p1 = new Promise(function(resolve){
+//     resolve('ddd')
+// })
 
-p1.then(function(value){
+// p1.then(function(value){
+//     console.log(value)
+// })
+
+// p1.then(function(value){
+//     console.log(value)
+// })
+
+
+/*return Promise()*/
+ 
+let p1 = function (){
+   return new Promise(function(resolve,reject){
+        setTimeout(()=>{
+            resolve('p1')
+        },200)
+    })
+}
+
+let p2 = function() {
+  return  new Promise2(function(resolve,reject){
+        setTimeout(()=>{
+            reject('p2')
+        },200)
+    })
+}
+
+p1().then(function(){
+    return p2().then(value=>{
+         console.log(`ddd--${value}`)
+     })
+}).catch(value=>{
     console.log(value)
 })
-
-p1.then(function(value){
-    console.log(value)
-})
- 
- 
 
 
 </script>
