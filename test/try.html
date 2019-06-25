@@ -42,6 +42,23 @@
 
     //     },200)
     //  });  
+
+
+// let p2 = new Promise2(function(resolve){
+//     resolve('test')
+// })
+// .then('lei').then(value=>{
+//     console.log(value)
+// })
+
+// let p1 = new Promise2(function(resolve){
+//     resolve( p2 )
+// })
+
+// p1.then(value=>{
+//     console.log(value)
+// })
+
      
     
 
@@ -64,7 +81,7 @@
     /** catch **/
 
 
-// var promise = new Promise2(function(resolve, reject) {
+// var promise = new Promise(function(resolve, reject) {
 //   throw new Error('test');
 // });
 // promise.catch(function(error) {
@@ -114,7 +131,7 @@
 
 /** finally **/
 
-//  var p1 = new Promise2(function(resolve,reject){
+//  var p1 = new Promise(function(resolve,reject){
 //          console.log(1)
 //          setTimeout(()=>{
 //              console.log(2)
@@ -252,29 +269,31 @@
 
 /*return Promise()*/
  
-let p1 = function (){
-   return new Promise(function(resolve,reject){
-        setTimeout(()=>{
-            resolve('p1')
-        },200)
-    })
-}
+// let p1 = function (){
+//    return new Promise(function(resolve,reject){
+//         setTimeout(()=>{
+//             resolve('p1')
+//         },200)
+//     })
+// }
 
-let p2 = function() {
-  return  new Promise2(function(resolve,reject){
-        setTimeout(()=>{
-            reject('p2')
-        },200)
-    })
-}
+// let p2 = function() {
+//   return  new Promise2(function(resolve,reject){
+//         setTimeout(()=>{
+//             reject('p2')
+//         },200)
+//     })
+// }
 
-p1().then(function(){
-    return p2().then(value=>{
-         console.log(`ddd--${value}`)
-     })
-}).catch(value=>{
-    console.log(value)
-})
+// p1().then(function(){
+//     return p2().then(value=>{
+//          console.log(`ddd--${value}`)
+//      })
+// }).catch(value=>{
+//     console.log(value)
+// })
+
+
 
 
 </script>

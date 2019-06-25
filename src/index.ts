@@ -3,7 +3,7 @@ import {handlerRes,pStatus} from './promise-utils';
 
 
 
-export default function Promise2(executor:any) {
+export default function Promise2(executor:any)  {
 
     if( !isFunc(executor) ){
         throw 'Promise2 传递的参数不为functon！！！';
@@ -17,6 +17,10 @@ export default function Promise2(executor:any) {
     this.error;
 
     const resolve = (value:object)=>{
+
+        if( value instanceof Promise2) { // why
+            return value['then'](resolve, reject);
+        }
         
         setTimeout(()=>{
             if(this.status===pStatus.pending){
@@ -64,14 +68,14 @@ Promise2.prototype.then = function (onFullfilled:Function,onRejected:Function) {
     return new Promise2(function(resolve = noop,reject = noop){
 
         const resolveHandler = function(value){
-            if(isDef(onFullfilled)) {
+            if(isFunc(onFullfilled)) {
                 handlerRes(onFullfilled,value,resolve,reject,scope.constructor);
             } else {
                 resolve(value)
             }
         }
         const rejectHanlder = function(error) {
-            if(isDef(onRejected)){
+            if(isFunc(onRejected)){
                 handlerRes(onRejected,error,resolve,reject,scope.constructor);
             } else {
                 reject(error);
