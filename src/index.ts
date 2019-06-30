@@ -195,11 +195,3 @@ Promise2.all = function(arr) {
     });
 }
 
-
-// Promise2.prototype.finally = function (callback) {
-//     let Constructor = this.constructor;
-//     return this.then(
-//       value  => Constructor.resolve(callback()).then(() => value),
-//       reason => Constructor.resolve(callback()).then(() => { throw reason })
-//     );
-// };

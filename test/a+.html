@@ -144,20 +144,20 @@
 // Promise A+ 没有将的特性。。
 // finally  不传任何参数，  之前写的有问题。。
 
-var p1 = new Promise2(function(resolve,reject){
-         console.log(1)
-         setTimeout(()=>{
-             console.log(2)
-             resolve(3)
-        },200)
-     })
+// var p1 = new Promise2(function(resolve,reject){
+//          console.log(1)
+//          setTimeout(()=>{
+//              console.log(2)
+//              resolve(3)
+//         },200)
+//      })
 
-    p1.then(function(value){
-        console.log(value)
-        return value
-    }).finally(function(value){
-        console.log(`${value}2`)
-    })
+//     p1.then(function(value){
+//         console.log(value)
+//         return value
+//     }).finally(function(value){
+//         console.log(`${value}2`)
+//     })
 
 </script>
 </html>
