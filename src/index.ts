@@ -17,12 +17,15 @@ export default function Promise2(executor:any)  {
     this.error;
 
     const resolve = (value:object)=>{
-
-        if( value instanceof Promise2) { // why
+        if( value instanceof Promise2) { // A+  3.2
             return value['then'](resolve, reject);
         }
+
+        if( (isFunc(value) || isObject(value))&& isFunc(value['then'])) { // A+  3.3
+            return value['then'].call(this,resolve,reject);
+        }
         
-        setTimeout(()=>{
+        setTimeout(()=>{ // Promise A+ 2.4
             if(this.status===pStatus.pending){
                 this.value = value;
                 this.resovlecbs.forEach((item:Function)=>{
@@ -59,16 +62,14 @@ export default function Promise2(executor:any)  {
     }
 }
 
-function handlerPromise(){}
-
 
 Promise2.prototype.then = function (onFullfilled:Function,onRejected:Function) {
 
     let scope = this;
-    return new Promise2(function(resolve = noop,reject = noop){
+    return new Promise2(function(resolve = noop,reject = noop){ // A+ 2.7
 
         const resolveHandler = function(value){
-            if(isFunc(onFullfilled)) {
+            if(isFunc(onFullfilled)) { // Promise A+ 2.1
                 handlerRes(onFullfilled,value,resolve,reject,scope.constructor);
             } else {
                 resolve(value)
@@ -107,12 +108,10 @@ Promise2.prototype.catch = function(catchcb:Function) {
 
 // hack  但是不对
 Promise2.prototype.finally = function (callback) {
-   return this.then((value)=>{
-        callback(value);
-        return value;
-   },(value)=>{
-        callback(value);
-        return value;
+   return this.then(()=>{
+        callback();
+   },()=>{
+        callback();
    });
 }
 

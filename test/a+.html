@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../dist/index.js"></script>
+</head>
+<body>
+    
+</body>
+<script>
+
+// 2.1
+// let p1 = new Promise2(function(resolve,reject){
+//     resolve('test')
+// })
+
+// p1.then().then(value=>{
+//     console.log(value);
+// })
+
+// A+ 2.7.1
+
+// 1）如果onFullfilled和onRejected返回一个value ，promise2也会走resolve流程。
+
+// let p1 = new Promise2(function(resolve,reject){
+//     reject('test')
+// })
+
+// p1.catch(res=>{
+//     return res
+// }).then(res=>{
+//     console.log(res);
+// })
+
+
+
+// A+ 2.7.2
+// 2）如果这两个函数有抛出了异常，则promise2走reject流程
+// let p1 = new Promise2(function(resolve,reject){
+//     reject('test')
+// })
+
+// p1.catch(res=>{
+//     throw 'haa'
+//     return res
+// }).catch(res=>{
+//     console.log(res);
+// })
+
+
+// 3）如果promise1的 onFullfilled不是一个函数，且promise1 fullfilled了，
+// 那么promise2必须fullfilled 。  promise1相同的value
+
+// A+ 3.1 1.如果 promise 和 x 指向同一对象，以 TypeError 为据因拒绝执行 promise
+// var p1 = new Promise2(function(reslove){
+//     console.log(p1)
+//     reslove(p1);
+// })  // 感觉不太对。。 因为 不会的。。
+// // console.log(p1);
+
+// p1.then(res=>{
+//     console.log(res)
+// })
+
+//
+/**
+ * 3.如果 x 为对象或者函数，且x.then是函数
+把 x.then 赋值给 then
+    1)如果取 x.then 的值时抛出错误 e ，则以 e 为据因拒绝 promise
+    2)如果 then 是函数，将 x 作为函数的作用域 this 调用之。传递两个回调函数作为参数，
+    第一个参数叫做 resolvePromise ，第二个参数叫做  rejectPromise:
+        (1)如果 resolvePromise 以值 y 为参数被调用，则运行 [[Resolve]](promise, y)
+        (2)如果 rejectPromise 以据因 r 为参数被调用，则以据因 r 拒绝 promise
+        (3)如果 resolvePromise 和 rejectPromise 均被调用，或者被同一参数调用了多次，
+        则优先采用首次调用并忽略剩下的调用
+            如果调用 then 方法抛出了异常 e：
+            如果 resolvePromise 或 rejectPromise 已经被调用，则忽略之
+            否则以 e 为据因拒绝 promise 
+*/
+
+//3.2
+// let p1 = new Promise2(function(resolve){
+//     resolve({
+//         then(){
+//             console.log(444)
+//         },
+//         xxx:'xxx'
+//     })
+// })
+// p1.then(res=>{
+//     console.log(res)
+// }).finally(res=>{
+//     console.log(res)
+// })
+
+// 3.2.1
+
+// let p1 = new Promise(function(resolve){
+//     resolve({
+//         then(resolvePromise,rejectPromise){
+//             resolvePromise('dinglei')
+//         },
+//     })
+// })
+// p1.then(res=>{
+//     console.log(res)
+// }).finally(res=>{
+//     console.log(res)
+// })
+
+// 3.2.2
+
+// let p1 = new Promise(function(resolve){
+//     resolve({
+//         then(resolvePromise,rejectPromise){
+//             rejectPromise('error')
+//         },
+//     })
+// })
+// p1.catch(res=>{
+//     console.log(res)
+// })
+
+// 3.2.3
+
+// let p1 = new Promise2(function(resolve){
+//     resolve({
+//         then(resolvePromise,rejectPromise){
+//             resolvePromise('dinglei')
+//             throw 'error'
+//         },
+//     })
+// })
+// p1.then(res=>{
+//     console.log(res)
+// }).catch(error=>{
+//     console.log(error)
+// })
+
+
+// Promise A+ 没有将的特性。。
+// finally  不传任何参数，  之前写的有问题。。
+
+var p1 = new Promise2(function(resolve,reject){
+         console.log(1)
+         setTimeout(()=>{
+             console.log(2)
+             resolve(3)
+        },200)
+     })
+
+    p1.then(function(value){
+        console.log(value)
+        return value
+    }).finally(function(value){
+        console.log(`${value}2`)
+    })
+
+</script>
+</html>

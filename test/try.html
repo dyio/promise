@@ -28,7 +28,7 @@
     //  })
 
 
-    //  var p1 = new Promise(function(resolve,reject){
+    //  var p1 = new Promise2(function(resolve,reject){
     //      console.log(1)
     //      setTimeout(()=>{
     //          console.log(2)
@@ -62,20 +62,20 @@
      
     
 
-    //  var p1 = new Promise(function(resolve,reject){
-    //      console.log(1)
-    //      setTimeout(()=>{
-    //          console.log(2)
-    //          reject(3)
-    //     },200)
-    //  })
+     var p1 = new Promise2(function(resolve,reject){
+         console.log(1)
+         setTimeout(()=>{
+             console.log(2)
+            reject(3)
+        },200)
+     })
 
-    // p1.then(function(value){
-    //     console.log(value)
-    //     return value
-    // }).finally(function(value){
-    //     console.log(`${value}2`)
-    // })
+    p1.then(function(value){
+        console.log(value)
+        return value
+    }).finally(function(value){
+        console.log(`${value}2`)
+    })
 
  
     /** catch **/
@@ -293,7 +293,23 @@
 //     console.log(value)
 // })
 
+// other
 
+// let p1 = new Promise(function(resolve){
+//     resolve({
+//         then:function(){
+//             console.log(7)
+//         }
+//     })
+// })
+
+// p1.then(value=>{
+//     console.log(value)
+// })
+
+// p1.then(value=>{
+//     console.log(value)
+// })
 
 
 </script>

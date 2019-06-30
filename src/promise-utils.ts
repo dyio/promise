@@ -6,9 +6,9 @@ export enum pStatus  {
     rejected = 'rejected'
 }
 
-export function deepGet(res,Promise2,nextResolve,nextReject){
+export function deepGet(res,Promise2,nextResolve,nextReject){  // Promise A+ 3.2
     if(res && res instanceof Promise2) {
-        if(res.status===pStatus.pending){
+        if(res.status===pStatus.pending){ // Promise A+ 3.2
             res.then(value=>{
                 deepGet(value,Promise2,nextResolve,nextReject)
             },err=>{
@@ -16,14 +16,18 @@ export function deepGet(res,Promise2,nextResolve,nextReject){
             })
         }
     } else {
-        nextResolve(res);
+        nextResolve(res); // Promise A+ 2.7.1
     }
 }
 
 export function handlerRes(handler,message,nextResolve,nextReject,Promise2){
     let res 
     if(isFunc(handler)){
-        res = handler(message);
+        try {  
+            res = handler(message);
+        } catch (error) {// A+ 2.7.2
+            nextReject(error);
+        }
     }
     deepGet(res,Promise2,nextResolve,nextReject)
 }
