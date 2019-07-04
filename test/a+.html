@@ -55,9 +55,10 @@
 // 那么promise2必须fullfilled 。  promise1相同的value
 
 // A+ 3.1 1.如果 promise 和 x 指向同一对象，以 TypeError 为据因拒绝执行 promise
-// var p1 = new Promise2(function(reslove){
-//     console.log(p1)
-//     reslove(p1);
+// var p1 = new Promise2(function(reslove){ // 未处理。。
+//     setTimeout(()=>{
+//         reslove(p1);
+//     },0)
 // })  // 感觉不太对。。 因为 不会的。。
 // // console.log(p1);
 
@@ -86,6 +87,7 @@
 //     resolve({
 //         then(){
 //             console.log(444)
+//             return 7;
 //         },
 //         xxx:'xxx'
 //     })
@@ -98,13 +100,15 @@
 
 // 3.2.1
 
-// let p1 = new Promise(function(resolve){
+// let p1 = new Promise2(function(resolve){
 //     resolve({
 //         then(resolvePromise,rejectPromise){
 //             resolvePromise('dinglei')
 //         },
 //     })
 // })
+
+// setTimeout(()=>{console.log(p1)},0)
 // p1.then(res=>{
 //     console.log(res)
 // }).finally(res=>{
