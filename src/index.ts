@@ -19,7 +19,7 @@ export default function Promise2(executor:any)  {
     const resolve = (value:object)=>{
 
         if(value===this){
-            throw new TypeError('传递的是当前的实例！！Chaining cycle detected for promise #<Promise>');
+            throw new TypeError('传递的是当前的实例！！Chaining cycle detected for promise #<Promise>'); // A+ 3.3.1
         }
 
         if( value instanceof Promise2) { // A+  3.2
